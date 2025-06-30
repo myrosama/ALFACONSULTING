@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulting Partner Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide-react@0.292.0/dist/lucide-react.js"></script>
+    <!-- Custom Styles & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Simple transition for page visibility */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Spinner */
+        .spinner {
+            border-top-color: #4f46e5;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div class="spinner h-12 w-12 rounded-full border-4 border-gray-200"></div>
+    </div>
+
+    <!-- Student Registration Page -->
+    <div id="page-register" class="page">
+        <div class="flex flex-col items-center justify-center min-h-screen p-4">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">Consulting Service Registration</h1>
+                <p class="text-gray-600 mt-2">Apply your coupon to get $50 off!</p>
+            </div>
+            <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
+                <form id="registration-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" name="name" id="name" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                    </div>
+                    <div>
+                        <label for="phone" class="text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" name="phone" id="phone" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                    </div>
+                    <div>
+                        <label for="email" class="text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" name="email" id="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                    </div>
+                    <div>
+                        <label for="coupon" class="text-sm font-medium text-gray-700">Coupon Code</label>
+                        <input type="text" name="coupon" id="coupon" placeholder="Enter code from your flyer" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                    </div>
+                    <div id="register-error" class="text-sm text-red-600 hidden"></div>
+                    <div>
+                        <button type="submit" id="register-submit-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300">
+                            Apply and Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <p class="mt-6 text-center text-sm text-gray-500">
+                Admin or Partner? <a href="#login" class="font-medium text-indigo-600 hover:text-indigo-500">Login here</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Registration Success Page -->
+    <div id="page-success" class="page">
+        <div class="min-h-screen flex items-center justify-center p-4 bg-gray-50">
+            <div class="max-w-md w-full text-center p-8 bg-white rounded-xl shadow-lg">
+                <svg class="mx-auto h-16 w-16 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h2 class="mt-4 text-2xl font-bold text-gray-800">Thank You!</h2>
+                <p class="mt-2 text-gray-600">Your information has been submitted successfully. Our consulting manager will contact you shortly.</p>
+                <p class="mt-4 text-sm text-gray-500">
+                    Admin or Partner? <a href="#login" class="font-medium text-indigo-600 hover:text-indigo-500">Login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="page-login" class="page">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="max-w-md w-full">
+                <div class="text-center mb-8">
+                     <h1 class="text-3xl font-bold text-gray-900">Partner & Admin Portal</h1>
+                     <p class="text-gray-600 mt-2">Sign in to your account</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <form id="login-form" class="space-y-6">
+                        <div>
+                            <label for="login-email" class="text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="login-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div>
+                            <label for="login-password" class="text-sm font-medium text-gray-700">Password</label>
+                             <input type="password" id="login-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div id="login-error" class="text-sm text-red-600 hidden"></div>
+                        <div>
+                            <button type="submit" id="login-submit-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400">
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                 <p class="mt-6 text-center text-sm text-gray-500">
+                    Not a partner? <a href="#register" class="font-medium text-indigo-600 hover:text-indigo-500">Register as a student</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="page-dashboard" class="page">
+        <div class="min-h-screen bg-gray-100">
+            <header class="bg-white shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                    <div>
+                        <h1 id="dashboard-title" class="text-xl font-bold text-gray-900">Dashboard</h1>
+                        <p id="dashboard-user-email" class="text-sm text-gray-500"></p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                       <button id="create-partner-btn" class="hidden flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                           Create Partner
+                       </button>
+                       <button id="logout-btn" class="flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                           Logout
+                       </button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 sm:px-0 mb-6">
+                    <!-- Stat Card: Total Referrals -->
+                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Total Referrals</p><p id="stats-total" class="mt-1 text-3xl font-semibold text-gray-900">0</p></div><div class="bg-blue-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></div>
+                    <!-- Stat Card: Successful Conversions -->
+                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Successful Conversions</p><p id="stats-paid" class="mt-1 text-3xl font-semibold text-gray-900">0</p></div><div class="bg-green-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div>
+                    <!-- Stat Card: Total Commission -->
+                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Total Commission</p><p id="stats-commission" class="mt-1 text-3xl font-semibold text-gray-900">$0</p></div><div class="bg-yellow-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
+                </div>
+                
+                <!-- Students Table -->
+                <div class="px-4 sm:px-0">
+                    <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+                        <div class="p-4 border-b">
+                            <h2 class="text-lg font-semibold text-gray-800">Student Submissions</h2>
+                        </div>
+                        <div id="students-table-container" class="overflow-x-auto">
+                            <!-- Table will be injected here by JS -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Create Partner Modal -->
+    <div id="create-partner-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800">Create New Partner Account</h3>
+                <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="p-4">
+                <form id="create-partner-form" class="space-y-4">
+                    <div>
+                        <label for="partner-email" class="text-sm font-medium text-gray-700">Partner's Email</label>
+                        <input type="email" id="partner-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"/>
+                    </div>
+                    <div>
+                        <label for="partner-password" class="text-sm font-medium text-gray-700">Temporary Password</label>
+                        <input type="password" id="partner-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"/>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Auto-Generated Partner ID</label>
+                        <input type="text" id="partner-id-display" readonly class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm cursor-not-allowed"/>
+                        <p class="text-xs text-gray-500 mt-1">This ID is generated from the email and is what students will use as their coupon code.</p>
+                    </div>
+                    <div id="modal-error" class="text-sm text-red-600 hidden"></div>
+                    <div id="modal-success" class="text-sm text-green-600 hidden"></div>
+                    <div class="pt-2 flex justify-end space-x-2">
+                        <button type="button" id="modal-cancel-btn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancel</button>
+                        <button type="submit" id="modal-create-btn" class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 disabled:bg-indigo-400">
+                            Create Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Firebase and App Logic -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+
+        // --- IMPORTANT: Firebase Configuration ---
+        // This configuration must be replaced with your actual Firebase project config.
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // --- Initialize Firebase ---
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- Global State ---
+        let currentUser = null;
+        let userRole = null; // 'admin' or 'partner'
+        let studentsUnsubscribe = null;
+
+        // --- DOM Elements ---
+        const pages = document.querySelectorAll('.page');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        // --- Page/UI Management ---
+        function showPage(pageId) {
+            pages.forEach(page => {
+                page.style.display = page.id === pageId ? 'block' : 'none';
+            });
+            loadingIndicator.style.display = 'none';
+        }
+
+        function handleHashChange() {
+            if (!currentUser) {
+                const hash = window.location.hash;
+                if (hash === '#login') {
+                    showPage('page-login');
+                } else {
+                    showPage('page-register');
+                }
+            }
+        }
+        
+        // --- Authentication ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                // Dummy role determination. Replace 'ADMIN_UID_HERE' with the actual UID of your admin user.
+                if (user.uid === 'REPLACE_WITH_YOUR_ADMIN_UID') {
+                    userRole = 'admin';
+                } else {
+                    userRole = 'partner';
+                }
+                setupDashboard();
+                showPage('page-dashboard');
+            } else {
+                currentUser = null;
+                userRole = null;
+                if (studentsUnsubscribe) studentsUnsubscribe(); // Stop listening to data
+                handleHashChange();
+            }
+        });
+
+        // --- Login Logic ---
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const submitBtn = document.getElementById('login-submit-btn');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Signing In...';
+            loginError.classList.add('hidden');
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // onAuthStateChanged will handle the rest
+            } catch (error) {
+                loginError.textContent = 'Login failed. Check email and password.';
+                loginError.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign In';
+            }
+        });
+
+        // --- Logout ---
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            signOut(auth);
+            window.location.hash = '';
+        });
+
+        // --- Student Registration Logic ---
+        const registrationForm = document.getElementById('registration-form');
+        const registerError = document.getElementById('register-error');
+        registrationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('register-submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            registerError.classList.add('hidden');
+
+            const formData = new FormData(registrationForm);
+            const studentData = {
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                partnerId: formData.get('coupon').trim().toUpperCase(),
+                status: 'pending',
+                submittedAt: new Date(),
+                finalAmount: 650,
+            };
+
+            try {
+                await addDoc(collection(db, 'students'), studentData);
+                
+                // Telegram Bot Placeholder (should be a Cloud Function in production)
+                console.log("--- Telegram Notification ---");
+                console.log(`New Student: ${studentData.name}, Phone: ${studentData.phone}, Coupon: ${studentData.partnerId}`);
+                console.log("----------------------------");
+
+                registrationForm.reset();
+                showPage('page-success');
+
+            } catch (err) {
+                console.error("Submission Error:", err);
+                registerError.textContent = 'Submission failed. Please try again.';
+                registerError.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Apply and Register';
+            }
+        });
+
+        // --- Dashboard Logic ---
+        function setupDashboard() {
+            // Setup UI based on role
+            document.getElementById('dashboard-title').textContent = userRole === 'admin' ? 'Admin Dashboard' : 'Partner Dashboard';
+            document.getElementById('dashboard-user-email').textContent = currentUser.email;
+            if (userRole === 'admin') {
+                document.getElementById('create-partner-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('create-partner-btn').classList.add('hidden');
+            }
+
+            // Setup Firestore listener
+            let q;
+            if (userRole === 'admin') {
+                q = query(collection(db, 'students'));
+            } else {
+                const partnerId = currentUser.email.split('@')[0].toUpperCase();
+                q = query(collection(db, 'students'), where("partnerId", "==", partnerId));
+            }
+
+            studentsUnsubscribe = onSnapshot(q, (snapshot) => {
+                const students = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                students.sort((a, b) => b.submittedAt.toDate() - a.submittedAt.toDate());
+                renderStudentTable(students);
+                updateStats(students);
+            }, (error) => {
+                console.error("Error fetching students:", error);
+                document.getElementById('students-table-container').innerHTML = `<p class="p-4 text-red-500">Error loading data.</p>`;
+            });
+        }
+
+        function updateStats(students) {
+            const totalStudents = students.length;
+            const paidStudents = students.filter(s => s.status === 'paid').length;
+            const commission = paidStudents * 100;
+            document.getElementById('stats-total').textContent = totalStudents;
+            document.getElementById('stats-paid').textContent = paidStudents;
+            document.getElementById('stats-commission').textContent = `$${commission.toLocaleString()}`;
+        }
+        
+        async function updateStudentStatus(studentId, newStatus) {
+            const studentRef = doc(db, 'students', studentId);
+            try {
+                await updateDoc(studentRef, { status: newStatus });
+            } catch (error) {
+                console.error("Failed to update status:", error);
+                alert("Error: Could not update status.");
+            }
+        }
+
+        function renderStudentTable(students) {
+            const container = document.getElementById('students-table-container');
+            if (students.length === 0) {
+                const partnerId = currentUser.email.split('@')[0].toUpperCase();
+                container.innerHTML = `<div class="p-8 text-center text-gray-500">
+                    <p>No students have registered yet.</p>
+                    ${userRole === 'partner' ? `<p class="mt-2 text-sm">Your Partner ID is: <span class="font-bold text-indigo-600">${partnerId}</span></p>` : ''}
+                </div>`;
+                return;
+            }
+
+            const statusBadge = (status) => {
+                const colors = {
+                    paid: 'bg-green-100 text-green-800',
+                    rejected: 'bg-red-100 text-red-800',
+                    pending: 'bg-yellow-100 text-yellow-800',
+                };
+                return `<span class="px-3 py-1 text-xs font-medium rounded-full inline-flex items-center ${colors[status] || colors.pending}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>`;
+            };
+
+            let tableHTML = `
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                            ${userRole === 'admin' ? '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partner ID</th>' : ''}
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Submitted</th>
+                            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            ${userRole === 'admin' ? '<th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>' : ''}
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+            `;
+
+            students.forEach(student => {
+                tableHTML += `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${student.name}</div></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><div class="text-sm text-gray-900">${student.phone}</div><div class="text-sm text-gray-500">${student.email}</div></td>
+                        ${userRole === 'admin' ? `<td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">${student.partnerId}</span></td>` : ''}
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${student.submittedAt.toDate().toLocaleDateString()}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">${statusBadge(student.status)}</td>
+                        ${userRole === 'admin' ? `
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button data-id="${student.id}" data-status="paid" class="status-btn text-green-600 hover:text-green-900" title="Mark as Paid"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></button>
+                                <button data-id="${student.id}" data-status="rejected" class="status-btn text-red-600 hover:text-red-900" title="Mark as Rejected"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></button>
+                                <button data-id="${student.id}" data-status="pending" class="status-btn text-yellow-600 hover:text-yellow-900" title="Mark as Pending"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button>
+                            </div>
+                        </td>` : ''}
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `</tbody></table>`;
+            container.innerHTML = tableHTML;
+            
+            // Add event listeners for status buttons
+            document.querySelectorAll('.status-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const studentId = e.currentTarget.dataset.id;
+                    const newStatus = e.currentTarget.dataset.status;
+                    updateStudentStatus(studentId, newStatus);
+                });
+            });
+        }
+        
+        // --- Create Partner Modal Logic ---
+        const modal = document.getElementById('create-partner-modal');
+        const modalForm = document.getElementById('create-partner-form');
+        const modalError = document.getElementById('modal-error');
+        const modalSuccess = document.getElementById('modal-success');
+        
+        function showModal() { modal.classList.remove('hidden'); }
+        function hideModal() { modal.classList.add('hidden'); modalForm.reset(); modalError.classList.add('hidden'); modalSuccess.classList.add('hidden');}
+
+        document.getElementById('create-partner-btn').addEventListener('click', showModal);
+        document.getElementById('modal-close-btn').addEventListener('click', hideModal);
+        document.getElementById('modal-cancel-btn').addEventListener('click', hideModal);
+        
+        document.getElementById('partner-email').addEventListener('input', (e) => {
+            const partnerId = e.target.value.split('@')[0].toUpperCase();
+            document.getElementById('partner-id-display').value = partnerId;
+        });
+
+        modalForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('partner-email').value;
+            const password = document.getElementById('partner-password').value;
+            const partnerId = document.getElementById('partner-id-display').value;
+            const createBtn = document.getElementById('modal-create-btn');
+            
+            createBtn.disabled = true;
+            createBtn.textContent = 'Creating...';
+            modalError.classList.add('hidden');
+            modalSuccess.classList.add('hidden');
+            
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                modalSuccess.textContent = `Partner account for ${email} created. Their Partner ID is ${partnerId}.`;
+                modalSuccess.classList.remove('hidden');
+                modalForm.reset();
+            } catch(err) {
+                console.error("Partner creation error:", err);
+                if (err.code === 'auth/email-already-in-use') {
+                    modalError.textContent = "This email is already in use.";
+                } else if (err.code === 'auth/weak-password') {
+                    modalError.textContent = "Password must be at least 6 characters.";
+                } else {
+                    modalError.textContent = "Failed to create partner account.";
+                }
+                modalError.classList.remove('hidden');
+            } finally {
+                createBtn.disabled = false;
+                createBtn.textContent = 'Create Account';
+            }
+        });
+
+        // --- Initial Load ---
+        window.addEventListener('hashchange', handleHashChange, false);
+        onAuthStateChanged(auth, user => { /* This listener handles initial page load */ });
+
+    </script>
+</body>
+</html>
