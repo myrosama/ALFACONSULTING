@@ -144,10 +144,6 @@
                         <p id="dashboard-user-email" class="text-sm text-gray-500"></p>
                     </div>
                     <div class="flex items-center space-x-4">
-                       <button id="create-partner-btn" class="hidden flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
-                           Create Partner
-                       </button>
                        <button id="logout-btn" class="flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
                            Logout
@@ -182,60 +178,22 @@
         </div>
     </div>
 
-    <!-- Create Partner Modal -->
-    <div id="create-partner-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
-            <div class="p-4 border-b flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-gray-800">Create New Partner Account</h3>
-                <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800">&times;</button>
-            </div>
-            <div class="p-4">
-                <form id="create-partner-form" class="space-y-4">
-                    <div>
-                        <label for="partner-email" class="text-sm font-medium text-gray-700">Partner's Email</label>
-                        <input type="email" id="partner-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"/>
-                    </div>
-                    <div>
-                        <label for="partner-password" class="text-sm font-medium text-gray-700">Temporary Password</label>
-                        <input type="password" id="partner-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"/>
-                    </div>
-                    <div>
-                        <label class="text-sm font-medium text-gray-700">Auto-Generated Partner ID</label>
-                        <input type="text" id="partner-id-display" readonly class="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm cursor-not-allowed"/>
-                        <p class="text-xs text-gray-500 mt-1">This ID is generated from the email and is what students will use as their coupon code.</p>
-                    </div>
-                    <div id="modal-error" class="text-sm text-red-600 hidden"></div>
-                    <div id="modal-success" class="text-sm text-green-600 hidden"></div>
-                    <div class="pt-2 flex justify-end space-x-2">
-                        <button type="button" id="modal-cancel-btn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancel</button>
-                        <button type="submit" id="modal-create-btn" class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 disabled:bg-indigo-400">
-                            Create Account
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-
     <!-- Firebase and App Logic -->
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
-        // --- IMPORTANT: Firebase Configuration ---
-        // This configuration must be replaced with your actual Firebase project config.
+        // --- Your web app's Firebase configuration ---
         const firebaseConfig = {
-            apiKey: "AIzaSyBH5diC5M7MnOIuOWaNPmOB1AV6uJVZyS8",
-            authDomain: "daemonclient-c0625.firebaseapp.com",
-            databaseURL: "https://daemonclient-c0625-default-rtdb.firebaseio.com",
-            projectId: "daemonclient-c0625",
-            storageBucket: "daemonclient-c0625.firebasestorage.app",
-            messagingSenderId: "424457448611",
-            appId: "1:424457448611:web:bea9f7673fb40f137de316",
-            measurementId: "G-72V5NJ7F2C"
+            apiKey: "AIzaSyBRR-9GjGWHSChsjg9yk1igLOzVPBzKi1E",
+            authDomain: "alfaconsulting-51b3c.firebaseapp.com",
+            projectId: "alfaconsulting-51b3c",
+            storageBucket: "alfaconsulting-51b3c.appspot.com",
+            messagingSenderId: "231631360072",
+            appId: "1:231631360072:web:ad56f2a3b0334bce5e087d",
+            measurementId: "G-L3B0B2GJPJ"
         };
 
         // --- Initialize Firebase ---
@@ -272,17 +230,31 @@
         }
         
         // --- Authentication ---
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
-                // Dummy role determination. Replace 'ADMIN_UID_HERE' with the actual UID of your admin user.
-                if (user.uid === 'REPLACE_WITH_YOUR_ADMIN_UID') {
-                    userRole = 'admin';
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    userRole = userData.role;
+                    currentUser.partnerId = userData.partnerId; // Attach partnerId to user object
+                    setupDashboard();
+                    showPage('page-dashboard');
                 } else {
-                    userRole = 'partner';
+                    // IMPORTANT: Replace this with your actual Admin User's UID from Firebase Authentication
+                    if (user.uid === 'REPLACE_WITH_YOUR_ADMIN_UID') {
+                        userRole = 'admin';
+                        await setDoc(userDocRef, { email: user.email, role: 'admin' });
+                        setupDashboard();
+                        showPage('page-dashboard');
+                    } else {
+                        console.error("User document not found for UID:", user.uid, ". Logging out.");
+                        alert("Your user profile could not be found. Please contact the administrator.");
+                        signOut(auth);
+                    }
                 }
-                setupDashboard();
-                showPage('page-dashboard');
             } else {
                 currentUser = null;
                 userRole = null;
@@ -345,7 +317,6 @@
             try {
                 await addDoc(collection(db, 'students'), studentData);
                 
-                // Telegram Bot Placeholder (should be a Cloud Function in production)
                 console.log("--- Telegram Notification ---");
                 console.log(`New Student: ${studentData.name}, Phone: ${studentData.phone}, Coupon: ${studentData.partnerId}`);
                 console.log("----------------------------");
@@ -365,22 +336,19 @@
 
         // --- Dashboard Logic ---
         function setupDashboard() {
-            // Setup UI based on role
             document.getElementById('dashboard-title').textContent = userRole === 'admin' ? 'Admin Dashboard' : 'Partner Dashboard';
             document.getElementById('dashboard-user-email').textContent = currentUser.email;
-            if (userRole === 'admin') {
-                document.getElementById('create-partner-btn').classList.remove('hidden');
-            } else {
-                document.getElementById('create-partner-btn').classList.add('hidden');
-            }
 
-            // Setup Firestore listener
             let q;
             if (userRole === 'admin') {
                 q = query(collection(db, 'students'));
             } else {
-                const partnerId = currentUser.email.split('@')[0].toUpperCase();
-                q = query(collection(db, 'students'), where("partnerId", "==", partnerId));
+                if (typeof currentUser.partnerId === 'undefined') {
+                    console.error("Partner ID is undefined for this user. Cannot query students.");
+                    alert("There was an error loading your data. Your Partner ID is missing.");
+                    return;
+                }
+                q = query(collection(db, "students"), where("partnerId", "==", currentUser.partnerId));
             }
 
             studentsUnsubscribe = onSnapshot(q, (snapshot) => {
@@ -416,9 +384,9 @@
         function renderStudentTable(students) {
             const container = document.getElementById('students-table-container');
             if (students.length === 0) {
-                const partnerId = currentUser.email.split('@')[0].toUpperCase();
+                const partnerId = currentUser.partnerId;
                 container.innerHTML = `<div class="p-8 text-center text-gray-500">
-                    <p>No students have registered yet.</p>
+                    <p>No students have registered using your code yet.</p>
                     ${userRole === 'partner' ? `<p class="mt-2 text-sm">Your Partner ID is: <span class="font-bold text-indigo-600">${partnerId}</span></p>` : ''}
                 </div>`;
                 return;
@@ -481,60 +449,10 @@
             });
         }
         
-        // --- Create Partner Modal Logic ---
-        const modal = document.getElementById('create-partner-modal');
-        const modalForm = document.getElementById('create-partner-form');
-        const modalError = document.getElementById('modal-error');
-        const modalSuccess = document.getElementById('modal-success');
-        
-        function showModal() { modal.classList.remove('hidden'); }
-        function hideModal() { modal.classList.add('hidden'); modalForm.reset(); modalError.classList.add('hidden'); modalSuccess.classList.add('hidden');}
-
-        document.getElementById('create-partner-btn').addEventListener('click', showModal);
-        document.getElementById('modal-close-btn').addEventListener('click', hideModal);
-        document.getElementById('modal-cancel-btn').addEventListener('click', hideModal);
-        
-        document.getElementById('partner-email').addEventListener('input', (e) => {
-            const partnerId = e.target.value.split('@')[0].toUpperCase();
-            document.getElementById('partner-id-display').value = partnerId;
-        });
-
-        modalForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('partner-email').value;
-            const password = document.getElementById('partner-password').value;
-            const partnerId = document.getElementById('partner-id-display').value;
-            const createBtn = document.getElementById('modal-create-btn');
-            
-            createBtn.disabled = true;
-            createBtn.textContent = 'Creating...';
-            modalError.classList.add('hidden');
-            modalSuccess.classList.add('hidden');
-            
-            try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                modalSuccess.textContent = `Partner account for ${email} created. Their Partner ID is ${partnerId}.`;
-                modalSuccess.classList.remove('hidden');
-                modalForm.reset();
-            } catch(err) {
-                console.error("Partner creation error:", err);
-                if (err.code === 'auth/email-already-in-use') {
-                    modalError.textContent = "This email is already in use.";
-                } else if (err.code === 'auth/weak-password') {
-                    modalError.textContent = "Password must be at least 6 characters.";
-                } else {
-                    modalError.textContent = "Failed to create partner account.";
-                }
-                modalError.classList.remove('hidden');
-            } finally {
-                createBtn.disabled = false;
-                createBtn.textContent = 'Create Account';
-            }
-        });
-
         // --- Initial Load ---
         window.addEventListener('hashchange', handleHashChange, false);
-        onAuthStateChanged(auth, user => { /* This listener handles initial page load */ });
+        // Initial call to set the correct page on first load
+        handleHashChange();
 
     </script>
 </body>
