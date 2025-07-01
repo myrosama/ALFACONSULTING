@@ -153,6 +153,15 @@
             </header>
 
             <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <!-- Partner ID Display -->
+                <div id="partner-id-container" class="hidden px-4 sm:px-0 mb-6">
+                    <div class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-4 rounded-md" role="alert">
+                        <p class="font-bold">Your Coupon Code</p>
+                        <p>This is the unique code to give to your students. They will use this to register.</p>
+                        <p id="partner-id-display" class="text-2xl font-mono bg-white mt-2 p-2 rounded text-center"></p>
+                    </div>
+                </div>
+
                 <!-- Stats Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 sm:px-0 mb-6">
                     <!-- Stat Card: Total Referrals -->
@@ -209,6 +218,7 @@
         // --- DOM Elements ---
         const pages = document.querySelectorAll('.page');
         const loadingIndicator = document.getElementById('loading-indicator');
+        const loginError = document.getElementById('login-error');
 
         // --- Page/UI Management ---
         function showPage(pageId) {
@@ -238,8 +248,19 @@
 
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
+                    
+                    // Critical check for partners
+                    if (userData.role === 'partner' && !userData.partnerID) {
+                        console.error("Partner user is missing partnerID field in Firestore.", user.uid);
+                        loginError.textContent = 'Your partner account is not configured correctly. Please contact support.';
+                        loginError.classList.remove('hidden');
+                        signOut(auth); // Log the user out
+                        showPage('page-login'); // Ensure they see the login page
+                        return; // Stop further execution
+                    }
+
                     userRole = userData.role;
-                    currentUser.partnerId = userData.partnerId; // Attach partnerId to user object
+                    currentUser.partnerId = userData.partnerID; // Use partnerID from Firestore
                     setupDashboard();
                     showPage('page-dashboard');
                 } else {
@@ -251,8 +272,10 @@
                         showPage('page-dashboard');
                     } else {
                         console.error("User document not found for UID:", user.uid, ". Logging out.");
-                        alert("Your user profile could not be found. Please contact the administrator.");
+                        loginError.textContent = 'Your user profile could not be found. Please contact the administrator.';
+                        loginError.classList.remove('hidden');
                         signOut(auth);
+                        showPage('page-login');
                     }
                 }
             } else {
@@ -265,7 +288,7 @@
 
         // --- Login Logic ---
         const loginForm = document.getElementById('login-form');
-        const loginError = document.getElementById('login-error');
+        
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
@@ -339,15 +362,19 @@
             document.getElementById('dashboard-title').textContent = userRole === 'admin' ? 'Admin Dashboard' : 'Partner Dashboard';
             document.getElementById('dashboard-user-email').textContent = currentUser.email;
 
+            const partnerIdContainer = document.getElementById('partner-id-container');
+            if (userRole === 'partner') {
+                document.getElementById('partner-id-display').textContent = currentUser.partnerId;
+                partnerIdContainer.classList.remove('hidden');
+            } else {
+                partnerIdContainer.classList.add('hidden');
+            }
+
             let q;
             if (userRole === 'admin') {
                 q = query(collection(db, 'students'));
             } else {
-                if (typeof currentUser.partnerId === 'undefined') {
-                    console.error("Partner ID is undefined for this user. Cannot query students.");
-                    alert("There was an error loading your data. Your Partner ID is missing.");
-                    return;
-                }
+                // This check is now safer because the onAuthStateChanged function ensures partnerId exists
                 q = query(collection(db, "students"), where("partnerId", "==", currentUser.partnerId));
             }
 
@@ -456,4 +483,4 @@
 
     </script>
 </body>
-</html>
+</ht
