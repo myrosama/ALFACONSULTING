@@ -6,8 +6,8 @@
     <title>ALFA CONSULTING Partner Portal</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide-react@0.292.0/dist/lucide-react.js"></script>
+    <!-- Chart.js for statistics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Custom Styles & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -134,16 +134,20 @@
         </div>
     </div>
 
-    <!-- Dashboard Page -->
-    <div id="page-dashboard" class="page">
+    <!-- Base Layout for Authenticated Pages -->
+    <div id="page-authenticated" class="page">
         <div class="min-h-screen bg-gray-100">
             <header class="bg-white shadow-sm">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                     <div>
-                        <h1 id="dashboard-title" class="text-xl font-bold text-gray-900">Dashboard</h1>
-                        <p id="dashboard-user-email" class="text-sm text-gray-500"></p>
+                        <h1 id="header-title" class="text-xl font-bold text-gray-900">Dashboard</h1>
+                        <p id="header-user-email" class="text-sm text-gray-500"></p>
                     </div>
                     <div class="flex items-center space-x-4">
+                       <nav class="flex space-x-4">
+                           <a href="#dashboard" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                           <a href="#statistics" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Statistics</a>
+                       </nav>
                        <button id="logout-btn" class="flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
                            Logout
@@ -151,48 +155,101 @@
                     </div>
                 </div>
             </header>
-
-            <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                <!-- Partner ID Display -->
-                <div id="partner-id-container" class="hidden px-4 sm:px-0 mb-6">
-                    <div class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-4 rounded-md" role="alert">
-                        <p class="font-bold">Your Coupon Code</p>
-                        <p>This is the unique code to give to your students. They will use this to register.</p>
-                        <p id="partner-id-display" class="text-2xl font-mono bg-white mt-2 p-2 rounded text-center"></p>
-                    </div>
-                </div>
-
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 sm:px-0 mb-6">
-                    <!-- Stat Card: Total Referrals -->
-                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Total Referrals</p><p id="stats-total" class="mt-1 text-3xl font-semibold text-gray-900">0</p></div><div class="bg-blue-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></div>
-                    <!-- Stat Card: Successful Conversions -->
-                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Successful Conversions</p><p id="stats-paid" class="mt-1 text-3xl font-semibold text-gray-900">0</p></div><div class="bg-green-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div>
-                    <!-- Stat Card: Total Commission -->
-                    <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Total Commission</p><p id="stats-commission" class="mt-1 text-3xl font-semibold text-gray-900">$0</p></div><div class="bg-yellow-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
-                </div>
-                
-                <!-- Students Table -->
-                <div class="px-4 sm:px-0">
-                    <div class="bg-white shadow-xl rounded-lg overflow-hidden">
-                        <div class="p-4 border-b">
-                            <h2 class="text-lg font-semibold text-gray-800">Student Submissions</h2>
-                        </div>
-                        <div id="students-table-container" class="overflow-x-auto">
-                            <!-- Table will be injected here by JS -->
-                        </div>
-                    </div>
-                </div>
+            <main id="main-content" class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <!-- Content for Dashboard or Statistics will be injected here -->
             </main>
         </div>
     </div>
 
+    <!-- Templates for dynamic content -->
+    <template id="template-dashboard">
+        <!-- Partner ID Display -->
+        <div id="partner-id-container" class="hidden px-4 sm:px-0 mb-6">
+            <div class="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-4 rounded-md" role="alert">
+                <p class="font-bold">Your Coupon Code</p>
+                <p>This is the unique code to give to your students. They will use this to register.</p>
+                <p id="partner-id-display" class="text-2xl font-mono bg-white mt-2 p-2 rounded text-center"></p>
+            </div>
+        </div>
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 sm:px-0 mb-6">
+            <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Total Referrals</p><p id="stats-total" class="mt-1 text-3xl font-semibold text-gray-900">0</p></div><div class="bg-blue-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div></div>
+            <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Successful Conversions</p><p id="stats-paid" class="mt-1 text-3xl font-semibold text-gray-900">0</p></div><div class="bg-green-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div>
+            <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between"><div><p class="text-sm font-medium text-gray-500 truncate">Total Commission</p><p id="stats-commission" class="mt-1 text-3xl font-semibold text-gray-900">$0</p></div><div class="bg-yellow-100 rounded-full p-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
+        </div>
+        <!-- Students Table -->
+        <div class="px-4 sm:px-0">
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800">Student Submissions</h2>
+                    <div id="dashboard-filter-container" class="hidden">
+                        <select id="dashboard-partner-filter" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="all">All Partners</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="students-table-container" class="overflow-x-auto"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-statistics">
+        <div class="space-y-6">
+            <!-- Filters -->
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div id="stats-partner-filter-container" class="hidden">
+                        <label for="stats-partner-filter" class="block text-sm font-medium text-gray-700">Filter by Partner</label>
+                        <select id="stats-partner-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="all">Overall Statistics</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="stats-status-filter" class="block text-sm font-medium text-gray-700">Filter by Status</label>
+                        <select id="stats-status-filter" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="all">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="paid">Paid</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- Stats Display -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md space-y-4">
+                    <h3 id="stats-view-title" class="text-xl font-semibold text-gray-800">Overall Statistics</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div><p class="text-sm text-gray-500">Total</p><p id="stats-detail-total" class="text-2xl font-bold"></p></div>
+                        <div><p class="text-sm text-gray-500">Paid</p><p id="stats-detail-paid" class="text-2xl font-bold text-green-600"></p></div>
+                        <div><p class="text-sm text-gray-500">Pending</p><p id="stats-detail-pending" class="text-2xl font-bold text-yellow-600"></p></div>
+                        <div><p class="text-sm text-gray-500">Rejected</p><p id="stats-detail-rejected" class="text-2xl font-bold text-red-600"></p></div>
+                    </div>
+                     <div class="border-t pt-4">
+                        <p class="text-lg font-semibold">Conversion Rate</p>
+                        <p class="text-3xl font-bold text-indigo-600"><span id="stats-detail-conversion"></span>%</p>
+                        <p class="text-sm text-gray-500">Percentage of total referrals that result in a payment.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-center">
+                    <canvas id="stats-chart"></canvas>
+                </div>
+            </div>
+            <!-- Filtered Students Table -->
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+                <div class="p-4 border-b">
+                    <h2 class="text-lg font-semibold text-gray-800">Filtered Student List</h2>
+                </div>
+                <div id="stats-table-container" class="overflow-x-auto"></div>
+            </div>
+        </div>
+    </template>
+
     <!-- Firebase and App Logic -->
     <script type="module">
-        // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, updateDoc, setDoc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
         // --- Your web app's Firebase configuration ---
         const firebaseConfig = {
@@ -214,11 +271,15 @@
         let currentUser = null;
         let userRole = null; // 'admin' or 'partner'
         let studentsUnsubscribe = null;
+        let allStudents = [];
+        let allPartners = [];
+        let statsChart = null;
 
         // --- DOM Elements ---
         const pages = document.querySelectorAll('.page');
         const loadingIndicator = document.getElementById('loading-indicator');
         const loginError = document.getElementById('login-error');
+        const mainContent = document.getElementById('main-content');
 
         // --- Page/UI Management ---
         function showPage(pageId) {
@@ -229,7 +290,22 @@
         }
 
         function handleHashChange() {
-            if (!currentUser) {
+            if (currentUser) {
+                const hash = window.location.hash || '#dashboard';
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.toggle('bg-indigo-100', link.hash === hash);
+                });
+                
+                if (hash === '#statistics') {
+                    document.getElementById('header-title').textContent = 'Statistics';
+                    mainContent.innerHTML = document.getElementById('template-statistics').innerHTML;
+                    setupStatisticsPage();
+                } else {
+                    document.getElementById('header-title').textContent = 'Dashboard';
+                    mainContent.innerHTML = document.getElementById('template-dashboard').innerHTML;
+                    setupDashboard();
+                }
+            } else {
                 const hash = window.location.hash;
                 if (hash === '#login') {
                     showPage('page-login');
@@ -248,60 +324,51 @@
 
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
-                    
-                    // Critical check for partners
                     if (userData.role === 'partner' && !userData.partnerID) {
-                        console.error("Partner user is missing partnerID field in Firestore.", user.uid);
-                        loginError.textContent = 'Your partner account is not configured correctly. Please contact support.';
-                        loginError.classList.remove('hidden');
-                        signOut(auth); // Log the user out
-                        showPage('page-login'); // Ensure they see the login page
-                        return; // Stop further execution
+                        signOut(auth); return;
+                    }
+                    userRole = userData.role;
+                    currentUser.partnerId = userData.partnerID;
+                    
+                    if (userRole === 'admin') {
+                        const partnersQuery = query(collection(db, "users"), where("role", "==", "partner"));
+                        const partnersSnapshot = await getDocs(partnersQuery);
+                        allPartners = partnersSnapshot.docs.map(doc => doc.data());
                     }
 
-                    userRole = userData.role;
-                    currentUser.partnerId = userData.partnerID; // Use partnerID from Firestore
-                    setupDashboard();
-                    showPage('page-dashboard');
+                    showPage('page-authenticated');
+                    handleHashChange();
                 } else {
-                    // This is where the admin account is recognized and its profile is created on first login.
                     if (user.uid === 'gS06Rq4f58aD9ZiJKp3VKjnQ9413') {
                         userRole = 'admin';
                         await setDoc(userDocRef, { email: user.email, role: 'admin' });
-                        setupDashboard();
-                        showPage('page-dashboard');
+                        showPage('page-authenticated');
+                        handleHashChange();
                     } else {
-                        console.error("User document not found for UID:", user.uid, ". Logging out.");
-                        loginError.textContent = 'Your user profile could not be found. Please contact the administrator.';
-                        loginError.classList.remove('hidden');
                         signOut(auth);
-                        showPage('page-login');
                     }
                 }
             } else {
                 currentUser = null;
                 userRole = null;
-                if (studentsUnsubscribe) studentsUnsubscribe(); // Stop listening to data
-                handleHashChange();
+                if (studentsUnsubscribe) studentsUnsubscribe();
+                allStudents = [];
+                allPartners = [];
+                showPage('page-login');
             }
         });
 
-        // --- Login Logic ---
-        const loginForm = document.getElementById('login-form');
-        
-        loginForm.addEventListener('submit', async (e) => {
+        // --- Login/Logout Logic ---
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             const submitBtn = document.getElementById('login-submit-btn');
-
             submitBtn.disabled = true;
             submitBtn.textContent = 'Signing In...';
             loginError.classList.add('hidden');
-
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                // onAuthStateChanged will handle the rest
             } catch (error) {
                 loginError.textContent = 'Login failed. Check email and password.';
                 loginError.classList.remove('hidden');
@@ -309,24 +376,18 @@
                 submitBtn.textContent = 'Sign In';
             }
         });
-
-        // --- Logout ---
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth);
             window.location.hash = '';
         });
 
         // --- Student Registration Logic ---
-        const registrationForm = document.getElementById('registration-form');
-        const registerError = document.getElementById('register-error');
-        registrationForm.addEventListener('submit', async (e) => {
+        document.getElementById('registration-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = document.getElementById('register-submit-btn');
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
-            registerError.classList.add('hidden');
-
-            const formData = new FormData(registrationForm);
+            const formData = new FormData(e.target);
             const studentData = {
                 name: formData.get('name'),
                 phone: formData.get('phone'),
@@ -336,66 +397,165 @@
                 submittedAt: new Date(),
                 finalAmount: 650,
             };
-
             try {
                 await addDoc(collection(db, 'students'), studentData);
-                
-                console.log("--- Telegram Notification ---");
-                console.log(`New Student: ${studentData.name}, Phone: ${studentData.phone}, Coupon: ${studentData.partnerId}`);
-                console.log("----------------------------");
-
-                registrationForm.reset();
                 showPage('page-success');
-
             } catch (err) {
-                console.error("Submission Error:", err);
-                registerError.textContent = 'Submission failed. Please try again.';
-                registerError.classList.remove('hidden');
+                document.getElementById('register-error').textContent = 'Submission failed. Please try again.';
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Apply and Register';
             }
         });
 
-        // --- Dashboard Logic ---
+        // --- Dashboard & Statistics Setup ---
         function setupDashboard() {
-            document.getElementById('dashboard-title').textContent = userRole === 'admin' ? 'Admin Dashboard' : 'Partner Dashboard';
-            document.getElementById('dashboard-user-email').textContent = currentUser.email;
+            document.getElementById('header-user-email').textContent = currentUser.email;
 
             const partnerIdContainer = document.getElementById('partner-id-container');
             if (userRole === 'partner') {
                 document.getElementById('partner-id-display').textContent = currentUser.partnerId;
                 partnerIdContainer.classList.remove('hidden');
-            } else {
-                partnerIdContainer.classList.add('hidden');
             }
 
-            let q;
-            if (userRole === 'admin') {
-                q = query(collection(db, 'students'));
-            } else {
-                // This check is now safer because the onAuthStateChanged function ensures partnerId exists
-                q = query(collection(db, "students"), where("partnerId", "==", currentUser.partnerId));
-            }
-
+            let q = query(collection(db, 'students')); // Admin fetches all initially
             studentsUnsubscribe = onSnapshot(q, (snapshot) => {
-                const students = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                students.sort((a, b) => b.submittedAt.toDate() - a.submittedAt.toDate());
-                renderStudentTable(students);
-                updateStats(students);
-            }, (error) => {
-                console.error("Error fetching students:", error);
-                document.getElementById('students-table-container').innerHTML = `<p class="p-4 text-red-500">Error loading data.</p>`;
+                allStudents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                allStudents.sort((a, b) => b.submittedAt.toDate() - a.submittedAt.toDate());
+                
+                let dashboardStudents = allStudents;
+                if (userRole === 'partner') {
+                    dashboardStudents = allStudents.filter(s => s.partnerId === currentUser.partnerId);
+                }
+                
+                updateDashboardStats(dashboardStudents);
+                renderStudentTable(dashboardStudents, 'students-table-container');
+
+                if (userRole === 'admin') {
+                    const filterContainer = document.getElementById('dashboard-filter-container');
+                    const filterSelect = document.getElementById('dashboard-partner-filter');
+                    filterContainer.classList.remove('hidden');
+                    
+                    filterSelect.innerHTML = '<option value="all">All Partners</option>';
+                    allPartners.forEach(p => {
+                        const option = document.createElement('option');
+                        option.value = p.partnerID;
+                        option.textContent = p.companyName || p.email;
+                        filterSelect.appendChild(option);
+                    });
+
+                    filterSelect.onchange = () => {
+                        const selectedPartnerId = filterSelect.value;
+                        const filtered = selectedPartnerId === 'all' 
+                            ? allStudents 
+                            : allStudents.filter(s => s.partnerId === selectedPartnerId);
+                        renderStudentTable(filtered, 'students-table-container');
+                    };
+                }
             });
         }
 
-        function updateStats(students) {
-            const totalStudents = students.length;
-            const paidStudents = students.filter(s => s.status === 'paid').length;
-            const commission = paidStudents * 100; // $100 commission for each paid student
-            document.getElementById('stats-total').textContent = totalStudents;
-            document.getElementById('stats-paid').textContent = paidStudents;
-            document.getElementById('stats-commission').textContent = `$${commission.toLocaleString()}`;
+        function setupStatisticsPage() {
+            if (userRole === 'admin') {
+                const partnerFilterContainer = document.getElementById('stats-partner-filter-container');
+                const partnerFilterSelect = document.getElementById('stats-partner-filter');
+                partnerFilterContainer.classList.remove('hidden');
+
+                partnerFilterSelect.innerHTML = '<option value="all">Overall Statistics</option>';
+                allPartners.forEach(p => {
+                    const option = document.createElement('option');
+                    option.value = p.partnerID;
+                    option.textContent = p.companyName || p.email;
+                    partnerFilterSelect.appendChild(option);
+                });
+            }
+            
+            const updateStatsView = () => {
+                const selectedPartnerId = userRole === 'admin' ? document.getElementById('stats-partner-filter').value : currentUser.partnerId;
+                const selectedStatus = document.getElementById('stats-status-filter').value;
+
+                let relevantStudents = allStudents;
+                if (userRole === 'partner') {
+                    relevantStudents = allStudents.filter(s => s.partnerId === currentUser.partnerId);
+                } else if (selectedPartnerId !== 'all') {
+                    relevantStudents = allStudents.filter(s => s.partnerId === selectedPartnerId);
+                }
+
+                const filteredStudents = selectedStatus === 'all'
+                    ? relevantStudents
+                    : relevantStudents.filter(s => s.status === selectedStatus);
+
+                const stats = calculateStats(relevantStudents);
+                renderDetailedStats(stats, selectedPartnerId);
+                renderStudentTable(filteredStudents, 'stats-table-container');
+            };
+
+            document.getElementById('stats-partner-filter')?.addEventListener('change', updateStatsView);
+            document.getElementById('stats-status-filter').addEventListener('change', updateStatsView);
+            
+            updateStatsView(); // Initial render
+        }
+
+        // --- Calculation and Rendering Functions ---
+        function calculateStats(students) {
+            const total = students.length;
+            const paid = students.filter(s => s.status === 'paid').length;
+            const pending = students.filter(s => s.status === 'pending').length;
+            const rejected = students.filter(s => s.status === 'rejected').length;
+            const conversion = total > 0 ? ((paid / total) * 100).toFixed(1) : 0;
+            return { total, paid, pending, rejected, conversion };
+        }
+
+        function updateDashboardStats(students) {
+            const { total, paid } = calculateStats(students);
+            const commission = paid * 100;
+            const statsTotalEl = document.getElementById('stats-total');
+            const statsPaidEl = document.getElementById('stats-paid');
+            const statsCommissionEl = document.getElementById('stats-commission');
+            if(statsTotalEl) statsTotalEl.textContent = total;
+            if(statsPaidEl) statsPaidEl.textContent = paid;
+            if(statsCommissionEl) statsCommissionEl.textContent = `$${commission.toLocaleString()}`;
+        }
+
+        function renderDetailedStats(stats, partnerId) {
+            document.getElementById('stats-detail-total').textContent = stats.total;
+            document.getElementById('stats-detail-paid').textContent = stats.paid;
+            document.getElementById('stats-detail-pending').textContent = stats.pending;
+            document.getElementById('stats-detail-rejected').textContent = stats.rejected;
+            document.getElementById('stats-detail-conversion').textContent = stats.conversion;
+
+            if (userRole === 'admin') {
+                const title = document.getElementById('stats-view-title');
+                if (partnerId === 'all') {
+                    title.textContent = 'Overall Statistics';
+                } else {
+                    const partner = allPartners.find(p => p.partnerID === partnerId);
+                    title.textContent = `Statistics for ${partner?.companyName || partnerId}`;
+                }
+            }
+
+            const ctx = document.getElementById('stats-chart').getContext('2d');
+            if (statsChart) {
+                statsChart.destroy();
+            }
+            statsChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Paid', 'Pending', 'Rejected'],
+                    datasets: [{
+                        data: [stats.paid, stats.pending, stats.rejected],
+                        backgroundColor: ['#10B981', '#F59E0B', '#EF4444'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: { display: true, text: 'Student Status Breakdown' }
+                    }
+                }
+            });
         }
         
         async function updateStudentStatus(studentId, newStatus) {
@@ -408,14 +568,12 @@
             }
         }
 
-        function renderStudentTable(students) {
-            const container = document.getElementById('students-table-container');
+        function renderStudentTable(students, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
             if (students.length === 0) {
-                const partnerId = currentUser.partnerId;
-                container.innerHTML = `<div class="p-8 text-center text-gray-500">
-                    <p>No students have registered using your code yet.</p>
-                    ${userRole === 'partner' ? `<p class="mt-2 text-sm">Your Partner ID is: <span class="font-bold text-indigo-600">${partnerId}</span></p>` : ''}
-                </div>`;
+                container.innerHTML = `<div class="p-8 text-center text-gray-500"><p>No matching students found.</p></div>`;
                 return;
             }
 
@@ -466,9 +624,8 @@
             tableHTML += `</tbody></table>`;
             container.innerHTML = tableHTML;
             
-            // Add event listeners for status buttons only if admin
             if (userRole === 'admin') {
-                document.querySelectorAll('.status-btn').forEach(btn => {
+                container.querySelectorAll('.status-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const studentId = e.currentTarget.dataset.id;
                         const newStatus = e.currentTarget.dataset.status;
@@ -480,9 +637,8 @@
         
         // --- Initial Load ---
         window.addEventListener('hashchange', handleHashChange, false);
-        // Initial call to set the correct page on first load
-        handleHashChange();
-
+        // Initial call is now handled by onAuthStateChanged
     </script>
 </body>
 </html>
+```
