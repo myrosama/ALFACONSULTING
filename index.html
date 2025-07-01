@@ -333,15 +333,18 @@
                     if (userRole === 'admin') {
                         const partnersQuery = query(collection(db, "users"), where("role", "==", "partner"));
                         const partnersSnapshot = await getDocs(partnersQuery);
-                        allPartners = partnersSnapshot.docs.map(doc => doc.data());
+                        allPartners = partnersSnapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
                     }
-
+                    
+                    listenToStudents();
                     showPage('page-authenticated');
                     handleHashChange();
+
                 } else {
                     if (user.uid === 'gS06Rq4f58aD9ZiJKp3VKjnQ9413') {
                         userRole = 'admin';
                         await setDoc(userDocRef, { email: user.email, role: 'admin' });
+                        listenToStudents();
                         showPage('page-authenticated');
                         handleHashChange();
                     } else {
@@ -408,6 +411,29 @@
             }
         });
 
+        // --- Central Data Listener ---
+        function listenToStudents() {
+            if (studentsUnsubscribe) studentsUnsubscribe(); // Unsubscribe from previous listener
+
+            let q;
+            if (userRole === 'admin') {
+                q = query(collection(db, 'students'));
+            } else {
+                q = query(collection(db, 'students'), where("partnerId", "==", currentUser.partnerId));
+            }
+
+            studentsUnsubscribe = onSnapshot(q, (snapshot) => {
+                allStudents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                allStudents.sort((a, b) => b.submittedAt.toDate() - a.submittedAt.toDate());
+                
+                // Refresh current view with new data
+                handleHashChange();
+            }, (error) => {
+                console.error("Error fetching students:", error);
+                mainContent.innerHTML = `<p class="p-4 text-red-500">Error loading student data. Please check permissions and try again.</p>`;
+            });
+        }
+
         // --- Dashboard & Statistics Setup ---
         function setupDashboard() {
             document.getElementById('header-user-email').textContent = currentUser.email;
@@ -417,42 +443,31 @@
                 document.getElementById('partner-id-display').textContent = currentUser.partnerId;
                 partnerIdContainer.classList.remove('hidden');
             }
+            
+            updateDashboardStats(allStudents);
+            renderStudentTable(allStudents, 'students-table-container');
 
-            let q = query(collection(db, 'students')); // Admin fetches all initially
-            studentsUnsubscribe = onSnapshot(q, (snapshot) => {
-                allStudents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                allStudents.sort((a, b) => b.submittedAt.toDate() - a.submittedAt.toDate());
+            if (userRole === 'admin') {
+                const filterContainer = document.getElementById('dashboard-filter-container');
+                const filterSelect = document.getElementById('dashboard-partner-filter');
+                filterContainer.classList.remove('hidden');
                 
-                let dashboardStudents = allStudents;
-                if (userRole === 'partner') {
-                    dashboardStudents = allStudents.filter(s => s.partnerId === currentUser.partnerId);
-                }
-                
-                updateDashboardStats(dashboardStudents);
-                renderStudentTable(dashboardStudents, 'students-table-container');
+                filterSelect.innerHTML = '<option value="all">All Partners</option>';
+                allPartners.forEach(p => {
+                    const option = document.createElement('option');
+                    option.value = p.partnerID;
+                    option.textContent = p.companyName || p.email;
+                    filterSelect.appendChild(option);
+                });
 
-                if (userRole === 'admin') {
-                    const filterContainer = document.getElementById('dashboard-filter-container');
-                    const filterSelect = document.getElementById('dashboard-partner-filter');
-                    filterContainer.classList.remove('hidden');
-                    
-                    filterSelect.innerHTML = '<option value="all">All Partners</option>';
-                    allPartners.forEach(p => {
-                        const option = document.createElement('option');
-                        option.value = p.partnerID;
-                        option.textContent = p.companyName || p.email;
-                        filterSelect.appendChild(option);
-                    });
-
-                    filterSelect.onchange = () => {
-                        const selectedPartnerId = filterSelect.value;
-                        const filtered = selectedPartnerId === 'all' 
-                            ? allStudents 
-                            : allStudents.filter(s => s.partnerId === selectedPartnerId);
-                        renderStudentTable(filtered, 'students-table-container');
-                    };
-                }
-            });
+                filterSelect.onchange = () => {
+                    const selectedPartnerId = filterSelect.value;
+                    const filtered = selectedPartnerId === 'all' 
+                        ? allStudents 
+                        : allStudents.filter(s => s.partnerId === selectedPartnerId);
+                    renderStudentTable(filtered, 'students-table-container');
+                };
+            }
         }
 
         function setupStatisticsPage() {
@@ -471,12 +486,12 @@
             }
             
             const updateStatsView = () => {
-                const selectedPartnerId = userRole === 'admin' ? document.getElementById('stats-partner-filter').value : currentUser.partnerId;
+                const selectedPartnerId = userRole === 'admin' ? document.getElementById('stats-partner-filter').value : 'all';
                 const selectedStatus = document.getElementById('stats-status-filter').value;
 
                 let relevantStudents = allStudents;
                 if (userRole === 'partner') {
-                    relevantStudents = allStudents.filter(s => s.partnerId === currentUser.partnerId);
+                    // For partners, their allStudents is already filtered, so no need to filter again by partnerId
                 } else if (selectedPartnerId !== 'all') {
                     relevantStudents = allStudents.filter(s => s.partnerId === selectedPartnerId);
                 }
@@ -641,4 +656,3 @@
     </script>
 </body>
 </html>
-```
