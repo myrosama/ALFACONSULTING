@@ -264,8 +264,8 @@
                     setupDashboard();
                     showPage('page-dashboard');
                 } else {
-                    // IMPORTANT: Replace this with your actual Admin User's UID from Firebase Authentication
-                    if (user.uid === 'REPLACE_WITH_YOUR_ADMIN_UID') {
+                    // This is where the admin account is recognized and its profile is created on first login.
+                    if (user.uid === 'gS06Rq4f58aD9ZiJKp3VKjnQ9413') {
                         userRole = 'admin';
                         await setDoc(userDocRef, { email: user.email, role: 'admin' });
                         setupDashboard();
@@ -392,7 +392,7 @@
         function updateStats(students) {
             const totalStudents = students.length;
             const paidStudents = students.filter(s => s.status === 'paid').length;
-            const commission = paidStudents * 100;
+            const commission = paidStudents * 100; // $100 commission for each paid student
             document.getElementById('stats-total').textContent = totalStudents;
             document.getElementById('stats-paid').textContent = paidStudents;
             document.getElementById('stats-commission').textContent = `$${commission.toLocaleString()}`;
@@ -466,14 +466,16 @@
             tableHTML += `</tbody></table>`;
             container.innerHTML = tableHTML;
             
-            // Add event listeners for status buttons
-            document.querySelectorAll('.status-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const studentId = e.currentTarget.dataset.id;
-                    const newStatus = e.currentTarget.dataset.status;
-                    updateStudentStatus(studentId, newStatus);
+            // Add event listeners for status buttons only if admin
+            if (userRole === 'admin') {
+                document.querySelectorAll('.status-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const studentId = e.currentTarget.dataset.id;
+                        const newStatus = e.currentTarget.dataset.status;
+                        updateStudentStatus(studentId, newStatus);
+                    });
                 });
-            });
+            }
         }
         
         // --- Initial Load ---
@@ -483,4 +485,4 @@
 
     </script>
 </body>
-</ht
+</html>
