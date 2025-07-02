@@ -37,7 +37,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 flex flex-col min-h-screen">
 
     <!-- Loading Indicator -->
     <div id="loading-indicator" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
@@ -45,8 +45,8 @@
     </div>
 
     <!-- Student Registration Page -->
-    <div id="page-register" class="page">
-        <div class="flex flex-col items-center justify-center min-h-screen p-4">
+    <div id="page-register" class="page flex-grow">
+        <div class="flex flex-col items-center justify-center min-h-full p-4">
             <div class="text-center mb-8">
                 <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="mx-auto h-20 w-auto mb-4">
                 <h1 class="text-3xl font-bold text-gray-900">ALFA CONSULTING</h1>
@@ -85,8 +85,8 @@
     </div>
     
     <!-- Registration Success Page -->
-    <div id="page-success" class="page">
-        <div class="min-h-screen flex items-center justify-center p-4 bg-gray-50">
+    <div id="page-success" class="page flex-grow">
+        <div class="min-h-full flex items-center justify-center p-4 bg-gray-50">
             <div class="max-w-md w-full text-center p-8 bg-white rounded-xl shadow-lg">
                 <svg class="mx-auto h-16 w-16 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -101,8 +101,8 @@
     </div>
 
     <!-- Login Page -->
-    <div id="page-login" class="page">
-        <div class="min-h-screen flex items-center justify-center p-4">
+    <div id="page-login" class="page flex-grow">
+        <div class="min-h-full flex items-center justify-center p-4">
             <div class="max-w-md w-full">
                 <div class="text-center mb-8">
                      <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="mx-auto h-20 w-auto mb-4">
@@ -135,31 +135,46 @@
     </div>
 
     <!-- Base Layout for Authenticated Pages -->
-    <div id="page-authenticated" class="page">
-        <div class="min-h-screen bg-gray-100">
-            <header class="bg-white shadow-sm">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+    <div id="page-authenticated" class="page flex flex-col flex-grow">
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="h-10 w-auto mr-4">
                     <div>
                         <h1 id="header-title" class="text-xl font-bold text-gray-900">Dashboard</h1>
                         <p id="header-user-email" class="text-sm text-gray-500"></p>
                     </div>
-                    <div class="flex items-center space-x-4">
-                       <nav class="flex space-x-4">
-                           <a href="#dashboard" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                           <a href="#statistics" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Statistics</a>
-                       </nav>
-                       <button id="logout-btn" class="flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                           Logout
-                       </button>
-                    </div>
                 </div>
-            </header>
-            <main id="main-content" class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                <!-- Content for Dashboard or Statistics will be injected here -->
-            </main>
-        </div>
+                <div class="flex items-center space-x-4">
+                   <nav class="flex space-x-4">
+                       <a href="#dashboard" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                       <a href="#statistics" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Statistics</a>
+                   </nav>
+                   <button id="logout-btn" class="flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                       Logout
+                   </button>
+                </div>
+            </div>
+        </header>
+        <main id="main-content" class="flex-grow max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 w-full">
+            <!-- Content for Dashboard or Statistics will be injected here -->
+        </main>
     </div>
+
+    <footer class="bg-gray-800 text-white w-full">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <p class="text-sm text-gray-400">&copy; 2025 ALFA CONSULTING. All rights reserved.</p>
+            <div class="flex space-x-6">
+                <a href="https://t.me/alfacademyy" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-transform hover:scale-110">
+                    <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.74l-1.45 6.84c-.12.57-.45.71-.92.44l-2.2-1.62-1.06 1.02c-.2.2-.37.37-.74.37l.27-2.25 4.2-3.8c.18-.16-.05-.25-.3-.09l-5.18 3.25-2.15-.67c-.56-.18-.58-.54.1-.8l8.9-3.48c.47-.18.88.13.72.74z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/alfa_akademy?igsh=azNldDBxcXQzbDdp&utm_source=qr" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-transform hover:scale-110">
+                    <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4.6c-1.6 0-1.8.01-2.43.04-.63.03-1.07.12-1.44.27-.4.16-.76.38-1.12.73-.36.36-.57.72-.73 1.12-.15.37-.24.81-.27 1.44C4.01 10.2 4 10.4 4 12s.01 1.8.04 2.43c.03.63.12 1.07.27 1.44.16.4.38.76.73 1.12.36.36.72.57 1.12.73.37.15.81.24 1.44.27.63.03 2.43.04 2.43.04s1.8-.01 2.43-.04c.63-.03 1.07-.12 1.44-.27.4-.16.76-.38 1.12-.73.36-.36.57-.72.73-1.12.15-.37.24-.81.27-1.44.03-.63.04-2.43.04-2.43s-.01-1.8-.04-2.43c-.03-.63-.12-1.07-.27-1.44a3.2 3.2 0 00-.73-1.12 3.2 3.2 0 00-1.12-.73c-.37-.15-.81-.24-1.44-.27C13.8 6.61 13.6 6.6 12 6.6zm0 1.8c1.63 0 1.85.01 2.5.04.58.03.88.12 1.08.2.23.09.4.2.58.38.18.18.29.35.38.58.08.2.17.5.2 1.08.03.65.04.87.04 2.5s-.01 1.85-.04 2.5c-.03.58-.12.88-.2 1.08a1.8 1.8 0 01-.38.58c-.18.18-.35.29-.58.38-.2.08-.5.17-1.08.2-.65.03-.87.04-2.5.04s-1.85-.01-2.5-.04c-.58-.03-.88-.12-1.08-.2a1.8 1.8 0 01-.58-.38 1.8 1.8 0 01-.38-.58c-.08-.2-.17-.5-.2-1.08-.03-.65-.04-.87-.04-2.5s.01-1.85.04-2.5c.03-.58.12-.88.2-1.08.09-.23.2-.4.38-.58.18-.18.35-.29.58-.38.2-.08.5-.17 1.08-.2.65-.03.87-.04 2.5-.04zm0 1.95a3.65 3.65 0 100 7.3 3.65 3.65 0 000-7.3zM12 16a4 4 0 110-8 4 4 0 010 8zm4.8-6.9a1.2 1.2 0 100-2.4 1.2 1.2 0 000 2.4z" clip-rule="evenodd"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <!-- Templates for dynamic content -->
     <template id="template-dashboard">
