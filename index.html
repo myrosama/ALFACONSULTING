@@ -44,123 +44,185 @@
         <div class="spinner h-12 w-12 rounded-full border-4 border-gray-200"></div>
     </div>
 
-    <!-- Student Registration Page -->
-    <div id="page-register" class="page flex-grow">
-        <div class="flex flex-col items-center justify-center min-h-full p-4">
-            <div class="text-center mb-8">
-                <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="mx-auto h-20 w-auto mb-4">
-                <h1 class="text-3xl font-bold text-gray-900">ALFA CONSULTING</h1>
-                <p class="text-gray-600 mt-2">Apply your coupon to get $50 off!</p>
+    <main class="flex-grow flex flex-col">
+        <!-- Student Registration Page -->
+        <div id="page-register" class="page flex-grow">
+            <div class="flex flex-col items-center justify-center min-h-full p-4">
+                <div class="w-full max-w-md">
+                    <div class="text-center mb-8">
+                        <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="mx-auto h-20 w-auto mb-4">
+                        <h1 class="text-3xl font-bold text-gray-900">ALFA CONSULTING</h1>
+                        <p class="text-gray-600 mt-2">Apply your coupon to get $50 off!</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <form id="registration-form" class="space-y-6">
+                            <div>
+                                <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
+                                <input type="text" name="name" id="name" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div>
+                                <label for="phone" class="text-sm font-medium text-gray-700">Phone Number</label>
+                                <input type="tel" name="phone" id="phone" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div>
+                                <label for="email" class="text-sm font-medium text-gray-700">Email Address</label>
+                                <input type="email" name="email" id="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                             <div>
+                                <label for="telegram" class="text-sm font-medium text-gray-700">Telegram Username</label>
+                                <input type="text" name="telegram" id="telegram" placeholder="@username" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                             <div>
+                                <label for="source" class="text-sm font-medium text-gray-700">Where did you hear about us?</label>
+                                <select name="source" id="source" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                    <option value="">Select an option</option>
+                                    <option value="Partner Center">Partner Center</option>
+                                    <option value="Social Media">Social Media</option>
+                                    <option value="Friend">From a Friend</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="coupon" class="text-sm font-medium text-gray-700">Coupon Code</label>
+                                <input type="text" name="coupon" id="coupon" placeholder="Enter code from your flyer" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div id="register-error" class="text-sm text-red-600 hidden"></div>
+                            <div>
+                                <button type="submit" id="register-submit-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300">
+                                    Apply and Register
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <p class="mt-6 text-center text-sm text-gray-500">
+                        Admin or Partner? <a href="#login" class="font-medium text-indigo-600 hover:text-indigo-500">Login here</a>
+                    </p>
+                </div>
             </div>
-            <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
-                <form id="registration-form" class="space-y-6">
-                    <div>
-                        <label for="name" class="text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="name" id="name" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-                    </div>
-                    <div>
-                        <label for="phone" class="text-sm font-medium text-gray-700">Phone Number</label>
-                        <input type="tel" name="phone" id="phone" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-                    </div>
-                    <div>
-                        <label for="email" class="text-sm font-medium text-gray-700">Email Address</label>
-                        <input type="email" name="email" id="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-                    </div>
-                    <div>
-                        <label for="coupon" class="text-sm font-medium text-gray-700">Coupon Code</label>
-                        <input type="text" name="coupon" id="coupon" placeholder="Enter code from your flyer" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-                    </div>
-                    <div id="register-error" class="text-sm text-red-600 hidden"></div>
-                    <div>
-                        <button type="submit" id="register-submit-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300">
-                            Apply and Register
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <p class="mt-6 text-center text-sm text-gray-500">
-                Admin or Partner? <a href="#login" class="font-medium text-indigo-600 hover:text-indigo-500">Login here</a>
-            </p>
         </div>
-    </div>
+        
+        <!-- Registration Success Page -->
+        <div id="page-success" class="page flex-grow">
+            <div class="flex flex-col items-center justify-center min-h-full p-4">
+                <div class="max-w-md w-full text-center p-8 bg-white rounded-xl shadow-lg">
+                    <svg class="mx-auto h-16 w-16 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h2 class="mt-4 text-2xl font-bold text-gray-800">Thank You!</h2>
+                    <p class="mt-2 text-gray-600">Your information has been submitted successfully. Our consulting manager will contact you shortly.</p>
+                    <p class="mt-4 text-sm text-gray-500">
+                        Admin or Partner? <a href="#login" class="font-medium text-indigo-600 hover:text-indigo-500">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
     
-    <!-- Registration Success Page -->
-    <div id="page-success" class="page flex-grow">
-        <div class="min-h-full flex items-center justify-center p-4 bg-gray-50">
-            <div class="max-w-md w-full text-center p-8 bg-white rounded-xl shadow-lg">
-                <svg class="mx-auto h-16 w-16 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <h2 class="mt-4 text-2xl font-bold text-gray-800">Thank You!</h2>
-                <p class="mt-2 text-gray-600">Your information has been submitted successfully. Our consulting manager will contact you shortly.</p>
-                <p class="mt-4 text-sm text-gray-500">
-                    Admin or Partner? <a href="#login" class="font-medium text-indigo-600 hover:text-indigo-500">Login here</a>
-                </p>
+        <!-- Login Page -->
+        <div id="page-login" class="page flex-grow">
+            <div class="flex flex-col items-center justify-center min-h-full p-4">
+                <div class="max-w-md w-full">
+                    <div class="text-center mb-8">
+                         <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="mx-auto h-20 w-auto mb-4">
+                         <h1 class="text-3xl font-bold text-gray-900">ALFA CONSULTING Portal</h1>
+                         <p class="text-gray-600 mt-2">Sign in to your account</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <form id="login-form" class="space-y-6">
+                            <div>
+                                <label for="login-email" class="text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="login-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div>
+                                <label for="login-password" class="text-sm font-medium text-gray-700">Password</label>
+                                 <input type="password" id="login-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div id="login-error" class="text-sm text-red-600 hidden"></div>
+                            <div>
+                                <button type="submit" id="login-submit-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400">
+                                    Sign In
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                     <p class="mt-6 text-center text-sm text-gray-500">
+                        Not a partner? <a href="#register" class="font-medium text-indigo-600 hover:text-indigo-500">Register as a student</a>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Login Page -->
-    <div id="page-login" class="page flex-grow">
-        <div class="min-h-full flex items-center justify-center p-4">
-            <div class="max-w-md w-full">
-                <div class="text-center mb-8">
-                     <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="mx-auto h-20 w-auto mb-4">
-                     <h1 class="text-3xl font-bold text-gray-900">ALFA CONSULTING Portal</h1>
-                     <p class="text-gray-600 mt-2">Sign in to your account</p>
+        <!-- Partner Registration Page -->
+        <div id="page-partner-register" class="page flex-grow">
+            <div class="flex flex-col items-center justify-center min-h-full p-4">
+                <div class="w-full max-w-md">
+                    <div class="text-center mb-8">
+                        <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="mx-auto h-20 w-auto mb-4">
+                        <h1 class="text-3xl font-bold text-gray-900">Partner Registration</h1>
+                        <p class="text-gray-600 mt-2">Create your partner account to get started.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <form id="partner-registration-form" class="space-y-6">
+                             <div>
+                                <label for="partner-name" class="text-sm font-medium text-gray-700">Company / Center Name</label>
+                                <input type="text" name="partner-name" id="partner-name" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div>
+                                <label for="partner-email" class="text-sm font-medium text-gray-700">Login Email</label>
+                                <input type="email" name="partner-email" id="partner-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div>
+                                <label for="partner-password" class="text-sm font-medium text-gray-700">Password</label>
+                                <input type="password" name="partner-password" id="partner-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            </div>
+                            <div>
+                                <label for="partner-coupon-code" class="text-sm font-medium text-gray-700">Choose Your Coupon Code</label>
+                                <input type="text" name="partner-coupon-code" id="partner-coupon-code" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                                <p class="text-xs text-gray-500 mt-1">This will be the unique code your students use. E.g., "LANGUAGECENTER20".</p>
+                            </div>
+                            <div id="partner-register-error" class="text-sm text-red-600 hidden"></div>
+                            <div id="partner-register-success" class="text-sm text-green-600 hidden"></div>
+                            <div>
+                                <button type="submit" id="partner-register-submit-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300">
+                                    Create Account
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                     <p class="mt-6 text-center text-sm text-gray-500">
+                        Already have an account? <a href="#login" class="font-medium text-indigo-600 hover:text-indigo-500">Login here</a>
+                    </p>
                 </div>
-                <div class="bg-white p-8 rounded-xl shadow-lg">
-                    <form id="login-form" class="space-y-6">
-                        <div>
-                            <label for="login-email" class="text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" id="login-email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-                        </div>
-                        <div>
-                            <label for="login-password" class="text-sm font-medium text-gray-700">Password</label>
-                             <input type="password" id="login-password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-                        </div>
-                        <div id="login-error" class="text-sm text-red-600 hidden"></div>
-                        <div>
-                            <button type="submit" id="login-submit-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400">
-                                Sign In
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                 <p class="mt-6 text-center text-sm text-gray-500">
-                    Not a partner? <a href="#register" class="font-medium text-indigo-600 hover:text-indigo-500">Register as a student</a>
-                </p>
             </div>
         </div>
-    </div>
-
-    <!-- Base Layout for Authenticated Pages -->
-    <div id="page-authenticated" class="page flex flex-col flex-grow">
-        <header class="bg-white shadow-sm">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-                <div class="flex items-center">
-                    <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="h-10 w-auto mr-4">
-                    <div>
-                        <h1 id="header-title" class="text-xl font-bold text-gray-900">Dashboard</h1>
-                        <p id="header-user-email" class="text-sm text-gray-500"></p>
+    
+        <!-- Base Layout for Authenticated Pages -->
+        <div id="page-authenticated" class="page flex-grow flex flex-col">
+            <header class="bg-white shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <img src="https://raw.githubusercontent.com/myrosama/ALFACONSULTING/main/photos/ALFA1.png" alt="ALFA CONSULTING Logo" class="h-10 w-auto mr-4">
+                        <div>
+                            <h1 id="header-title" class="text-xl font-bold text-gray-900">Dashboard</h1>
+                            <p id="header-user-email" class="text-sm text-gray-500"></p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                       <nav class="flex space-x-4">
+                           <a href="#dashboard" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                           <a href="#statistics" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Statistics</a>
+                       </nav>
+                       <button id="logout-btn" class="flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                           Logout
+                       </button>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                   <nav class="flex space-x-4">
-                       <a href="#dashboard" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                       <a href="#statistics" class="nav-link text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Statistics</a>
-                   </nav>
-                   <button id="logout-btn" class="flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-gray-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                       Logout
-                   </button>
-                </div>
-            </div>
-        </header>
-        <main id="main-content" class="flex-grow max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 w-full">
-            <!-- Content for Dashboard or Statistics will be injected here -->
-        </main>
-    </div>
+            </header>
+            <main id="main-content" class="flex-grow max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 w-full">
+                <!-- Content for Dashboard or Statistics will be injected here -->
+            </main>
+        </div>
+    </main>
 
     <footer class="bg-gray-800 text-white w-full">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
@@ -170,7 +232,7 @@
                     <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.74l-1.45 6.84c-.12.57-.45.71-.92.44l-2.2-1.62-1.06 1.02c-.2.2-.37.37-.74.37l.27-2.25 4.2-3.8c.18-.16-.05-.25-.3-.09l-5.18 3.25-2.15-.67c-.56-.18-.58-.54.1-.8l8.9-3.48c.47-.18.88.13.72.74z"/></svg>
                 </a>
                 <a href="https://www.instagram.com/alfa_akademy?igsh=azNldDBxcXQzbDdp&utm_source=qr" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-transform hover:scale-110">
-                    <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4.6c-1.6 0-1.8.01-2.43.04-.63.03-1.07.12-1.44.27-.4.16-.76.38-1.12.73-.36.36-.57.72-.73 1.12-.15.37-.24.81-.27 1.44C4.01 10.2 4 10.4 4 12s.01 1.8.04 2.43c.03.63.12 1.07.27 1.44.16.4.38.76.73 1.12.36.36.72.57 1.12.73.37.15.81.24 1.44.27.63.03 2.43.04 2.43.04s1.8-.01 2.43-.04c.63-.03 1.07-.12 1.44-.27.4-.16.76-.38 1.12-.73.36-.36.57-.72.73-1.12.15-.37.24-.81.27-1.44.03-.63.04-2.43.04-2.43s-.01-1.8-.04-2.43c-.03-.63-.12-1.07-.27-1.44a3.2 3.2 0 00-.73-1.12 3.2 3.2 0 00-1.12-.73c-.37-.15-.81-.24-1.44-.27C13.8 6.61 13.6 6.6 12 6.6zm0 1.8c1.63 0 1.85.01 2.5.04.58.03.88.12 1.08.2.23.09.4.2.58.38.18.18.29.35.38.58.08.2.17.5.2 1.08.03.65.04.87.04 2.5s-.01 1.85-.04 2.5c-.03.58-.12.88-.2 1.08a1.8 1.8 0 01-.38.58c-.18.18-.35.29-.58.38-.2.08-.5.17-1.08.2-.65.03-.87.04-2.5.04s-1.85-.01-2.5-.04c-.58-.03-.88-.12-1.08-.2a1.8 1.8 0 01-.58-.38 1.8 1.8 0 01-.38-.58c-.08-.2-.17-.5-.2-1.08-.03-.65-.04-.87-.04-2.5s.01-1.85.04-2.5c.03-.58.12-.88.2-1.08.09-.23.2-.4.38-.58.18-.18.35-.29.58-.38.2-.08.5-.17 1.08-.2.65-.03.87-.04 2.5-.04zm0 1.95a3.65 3.65 0 100 7.3 3.65 3.65 0 000-7.3zM12 16a4 4 0 110-8 4 4 0 010 8zm4.8-6.9a1.2 1.2 0 100-2.4 1.2 1.2 0 000 2.4z" clip-rule="evenodd"/></svg>
+                    <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4.6c-1.6 0-1.8.01-2.43.04-.63.03-1.07.12-1.44.27-.4.16-.76.38-1.12.73-.36.36-.57.72-.73 1.12-.15.37-.24.81-.27 1.44C4.01 10.2 4 10.4 4 12s.01 1.8.04 2.43c.03.63.12 1.07.27 1.44.16.4.38.76.73 1.12.36.36.72.57 1.12.73.37.15.81.24 1.44.27.63.03 2.43.04 2.43.04s1.8-.01 2.43-.04c.63-.03 1.07-.12 1.44-.27.4-.16.76-.38 1.12-.73.36-.36.57-.72.73-1.12.15-.37-.24.81.27-1.44.03-.63.04-2.43.04-2.43s-.01-1.8-.04-2.43c-.03-.63-.12-1.07-.27-1.44a3.2 3.2 0 00-.73-1.12 3.2 3.2 0 00-1.12-.73c-.37-.15-.81-.24-1.44-.27C13.8 6.61 13.6 6.6 12 6.6zm0 1.8c1.63 0 1.85.01 2.5.04.58.03.88.12 1.08.2.23.09.4.2.58.38.18.18.29.35.38.58.08.2.17.5.2 1.08.03.65.04.87.04 2.5s-.01 1.85-.04 2.5c-.03.58-.12.88-.2 1.08a1.8 1.8 0 01-.38.58c-.18.18-.35.29-.58.38-.2.08-.5.17-1.08.2-.65.03-.87.04-2.5.04s-1.85-.01-2.5-.04c-.58-.03-.88-.12-1.08-.2a1.8 1.8 0 01-.58-.38 1.8 1.8 0 01-.38-.58c-.08-.2-.17-.5-.2-1.08-.03-.65-.04-.87-.04-2.5s.01-1.85.04-2.5c.03-.58.12-.88.2-1.08.09-.23.2-.4.38-.58.18-.18.35-.29.58-.38.2-.08.5-.17 1.08-.2.65-.03.87-.04 2.5-.04zm0 1.95a3.65 3.65 0 100 7.3 3.65 3.65 0 000-7.3zM12 16a4 4 0 110-8 4 4 0 010 8zm4.8-6.9a1.2 1.2 0 100-2.4 1.2 1.2 0 000 2.4z" clip-rule="evenodd"/></svg>
                 </a>
             </div>
         </div>
@@ -289,6 +351,7 @@
         let allStudents = [];
         let allPartners = [];
         let statsChart = null;
+        let selectedDashboardFilter = 'all'; // To persist filter state
 
         // --- DOM Elements ---
         const pages = document.querySelectorAll('.page');
@@ -322,9 +385,12 @@
                 }
             } else {
                 const hash = window.location.hash;
-                if (hash === '#login') {
+                if (hash === '#regpartner') {
+                    showPage('page-partner-register');
+                } else if (hash === '#login') {
                     showPage('page-login');
-                } else {
+                }
+                else {
                     showPage('page-register');
                 }
             }
@@ -372,7 +438,7 @@
                 if (studentsUnsubscribe) studentsUnsubscribe();
                 allStudents = [];
                 allPartners = [];
-                showPage('page-login');
+                handleHashChange();
             }
         });
 
@@ -410,6 +476,8 @@
                 name: formData.get('name'),
                 phone: formData.get('phone'),
                 email: formData.get('email'),
+                telegramUsername: formData.get('telegram'),
+                source: formData.get('source'),
                 partnerId: formData.get('coupon').trim().toUpperCase(),
                 status: 'pending',
                 submittedAt: new Date(),
@@ -425,6 +493,71 @@
                 submitBtn.textContent = 'Apply and Register';
             }
         });
+        
+        // --- Partner Registration Logic ---
+        document.addEventListener('submit', async (e) => {
+            if (e.target.id !== 'partner-registration-form') return;
+            e.preventDefault();
+            const partnerRegForm = e.target;
+            const partnerRegError = document.getElementById('partner-register-error');
+            const partnerRegSuccess = document.getElementById('partner-register-success');
+            const email = partnerRegForm.querySelector('#partner-email').value;
+            const password = partnerRegForm.querySelector('#partner-password').value;
+            const companyName = partnerRegForm.querySelector('#partner-name').value;
+            const partnerId = partnerRegForm.querySelector('#partner-coupon-code').value.trim().toUpperCase();
+            const submitBtn = partnerRegForm.querySelector('#partner-register-submit-btn');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating...';
+            partnerRegError.classList.add('hidden');
+            partnerRegSuccess.classList.add('hidden');
+
+            if (!partnerId) {
+                partnerRegError.textContent = "Please choose a coupon code.";
+                partnerRegError.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Account';
+                return;
+            }
+
+            try {
+                const couponQuery = query(collection(db, "users"), where("partnerID", "==", partnerId));
+                const couponSnapshot = await getDocs(couponQuery);
+                if (!couponSnapshot.empty) {
+                    throw new Error("Coupon code already in use. Please choose another one.");
+                }
+
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    companyName: companyName,
+                    role: "partner",
+                    partnerID: partnerId,
+                    createdAt: new Date()
+                });
+
+                partnerRegSuccess.innerHTML = `Account created successfully! Your unique Partner ID (Coupon Code) is: <br><strong class="text-lg">${partnerId}</strong>. You can now log in.`;
+                partnerRegSuccess.classList.remove('hidden');
+                partnerRegForm.reset();
+
+            } catch (err) {
+                if (err.message) {
+                     partnerRegError.textContent = err.message;
+                } else if (err.code === 'auth/email-already-in-use') {
+                    partnerRegError.textContent = "This email address is already in use.";
+                } else if (err.code === 'auth/weak-password') {
+                    partnerRegError.textContent = "Password should be at least 6 characters.";
+                } else {
+                    partnerRegError.textContent = "Failed to create partner account.";
+                }
+                partnerRegError.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Account';
+            }
+        });
 
         // --- Central Data Listener ---
         function listenToStudents() {
@@ -438,8 +571,15 @@
             }
 
             studentsUnsubscribe = onSnapshot(q, (snapshot) => {
-                allStudents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                allStudents.sort((a, b) => b.submittedAt.toDate() - a.submittedAt.toDate());
+                const studentData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                studentData.sort((a, b) => b.submittedAt.toDate() - a.submittedAt.toDate());
+                
+                if (userRole === 'admin') {
+                    allStudents = studentData;
+                } else {
+                    // For partners, allStudents is just their students
+                    allStudents = studentData;
+                }
                 
                 // Refresh current view with new data
                 handleHashChange();
@@ -459,9 +599,7 @@
                 partnerIdContainer.classList.remove('hidden');
             }
             
-            updateDashboardStats(allStudents);
-            renderStudentTable(allStudents, 'students-table-container');
-
+            let studentsToDisplay = allStudents;
             if (userRole === 'admin') {
                 const filterContainer = document.getElementById('dashboard-filter-container');
                 const filterSelect = document.getElementById('dashboard-partner-filter');
@@ -475,14 +613,23 @@
                     filterSelect.appendChild(option);
                 });
 
+                filterSelect.value = selectedDashboardFilter;
+
+                if (selectedDashboardFilter !== 'all') {
+                    studentsToDisplay = allStudents.filter(s => s.partnerId === selectedDashboardFilter);
+                }
+
                 filterSelect.onchange = () => {
-                    const selectedPartnerId = filterSelect.value;
-                    const filtered = selectedPartnerId === 'all' 
+                    selectedDashboardFilter = filterSelect.value;
+                    const filtered = selectedDashboardFilter === 'all' 
                         ? allStudents 
-                        : allStudents.filter(s => s.partnerId === selectedPartnerId);
+                        : allStudents.filter(s => s.partnerId === selectedDashboardFilter);
                     renderStudentTable(filtered, 'students-table-container');
                 };
             }
+            
+            updateDashboardStats(studentsToDisplay);
+            renderStudentTable(studentsToDisplay, 'students-table-container');
         }
 
         function setupStatisticsPage() {
@@ -506,7 +653,7 @@
 
                 let relevantStudents = allStudents;
                 if (userRole === 'partner') {
-                    // For partners, their allStudents is already filtered, so no need to filter again by partnerId
+                    // For partners, their allStudents is already filtered
                 } else if (selectedPartnerId !== 'all') {
                     relevantStudents = allStudents.filter(s => s.partnerId === selectedPartnerId);
                 }
@@ -622,6 +769,8 @@
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telegram</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
                             ${userRole === 'admin' ? '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partner ID</th>' : ''}
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Submitted</th>
                             <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -636,6 +785,8 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 whitespace-nowrap"><div class="text-sm font-medium text-gray-900">${student.name}</div></td>
                         <td class="px-6 py-4 whitespace-nowrap"><div class="text-sm text-gray-900">${student.phone}</div><div class="text-sm text-gray-500">${student.email}</div></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${student.telegramUsername || '-'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${student.source || '-'}</td>
                         ${userRole === 'admin' ? `<td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">${student.partnerId}</span></td>` : ''}
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${student.submittedAt.toDate().toLocaleDateString()}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">${statusBadge(student.status)}</td>
