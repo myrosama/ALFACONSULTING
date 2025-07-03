@@ -1,0 +1,3 @@
+firebase-admin
+python-telegram-bot
+google-cloud-firestore
