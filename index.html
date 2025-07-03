@@ -624,6 +624,7 @@
                     const filtered = selectedDashboardFilter === 'all' 
                         ? allStudents 
                         : allStudents.filter(s => s.partnerId === selectedDashboardFilter);
+                    updateDashboardStats(filtered);
                     renderStudentTable(filtered, 'students-table-container');
                 };
             }
